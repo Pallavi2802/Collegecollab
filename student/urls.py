@@ -26,7 +26,7 @@ urlpatterns = [
     path('addDeadline', views.addDeadline.as_view(), name="addDeadline"),
     path('delete/<str:model>/<int:model_id>', views.delete, name="delete"),
     # Adding Code below this
-    path('search/', views.search, name="search"),
+    path('search/', views.search.as_view(), name="search"),
     path('recommendations/', views.recommend, name="recommendations"),
     path('myList/', views.myList, name="myList"),
     #     path('addCollege/', views.AddCollege.as_view(), name='addCollege'),

@@ -10,25 +10,88 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="{% static 'super.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'super.css' %}"> 
     <link rel="stylesheet" href="{% static 'footer.css' %}">
     <script src="https://use.fontawesome.com/977b0e453b.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Add Colleges</title>
-
-    <style>
-        .btn,
-        .btn-primary {
-            background-color: #866ec7;
-        }
-    </style>
+    
+    <title>Search College</title>
 </head>
+<style media="screen">
+    html,body{
+        height:100%;
+        width:100%;
+    }
+    h6{
+        color:gray;
+    }
+    p{
+        color:gray;
+    }
+    input{
+        width:30%;
+        height:50px;
+        padding:10px;
+        margin-top:20px;
+    }
+    .main-content{
+        height:auto;
+        width: auto;
+    }
+.flex-child {
+    flex: 1;
+    border: 2px solid transparent;
+}  
+.flex-child:first-child {
+    margin-right: 20px;
+} 
+    button{
+        width:30%;
+        margin-top:20px;
+        background-color:#866ec7;
+        height:50px;
+        color:white;
+    }
+    h4{
+        margin-top: 20px;
+        font-size: 15px;
+        color:gray;
+    }
+    a{
+        color: #866ec7;
+        margin-top: 20px!important;
+        font-style: italic;
+    }
+    @media only screen and (max-width: 600px) {
+        input,button{
+            width:90%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+        }
+        h4{
+            margin-top: 40px;
+        }
+}
 
+</style>
 <body>
-
+    <div class="main-content">
+    
+        <a href="{% url 'studentHome' %}"><i style="margin-bottom: 20px;float: right;"class="fa fa-home fa-2x"></i></a>
+                  <h3> Search College </h3>
+                  <div class="flex-child" >
+    <form method="post" action="{% url 'search' %}">
+        {% csrf_token %}
+    <input name="query" type="text" placeholder="Enter here">
+    <br>
+    <button type="submit" name="button">Submit</button>
+    </form>
+    </div>
+    <div class="flex-child ">
     <div class="card-deck">
         {%for item in items%}
-        <div class="card" style="display: flex;">
+        <div class="card" style="display: flex;margin:30px 20px 20px 40px;">
 
             <img class="card-img-top" style="height: 300px;" src="{{item.campusImage}}" alt="{{item.name}}">
             <div class="card-body">
@@ -37,22 +100,20 @@
             </div>
             <div class="card-footer">
                 <a href="https://{{item.website}}" class="btn btn-primary">{{item.website}}</a>
-                <a href="{% url 'search' item.collegeUnitId %}" class="btn btn-primary">More
-                    Info</a>
-                <a href="{% url 'addtolist' item.name%}" class="btn btn-primary" style="float: right;">Add College to
-                    List</a>
+                <a href="{% url 'search' item.collegeUnitId %}" class="btn btn-primary">More Info</a>
+                <a href="{% url 'addtolist' item.name%}" class="btn btn-primary" style="float: right;">Add College to List</a>
             </div>
 
         </div>
-        {% if forloop.counter|divisibleby:3 %}
+        {% if forloop.counter|divisibleby:2 %}
     </div>
     <br>
     <div class="card-deck">
         {%endif%}
         {%endfor%}
     </div>
-
-
+</div>
+</div>
 
 
     <footer class="site-footer">

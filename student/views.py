@@ -206,15 +206,23 @@ def delete(request, model, model_id):
 
 
 # Adding below this line
-def search(request):
+class search(APIView):
+    def get(self,request):
     # return render(request, 'search.html')
-    URL = "https://api.collegeai.com/v1/api/college-list?api_key=zPrUOEVtV86G&info_ids=website%2CshortDescription%2ClongDescription%2CcampusImage%2Ccity%2CstateAbbr%2Caliases%2Ccolors%2ClocationLong%2ClocationLat"
+       URL = "https://api.collegeai.com/v1/api/college-list?api_key=zPrUOEVtV86G&info_ids=website%2CshortDescription%2ClongDescription%2CcampusImage%2Ccity%2CstateAbbr%2Caliases%2Ccolors%2ClocationLong%2ClocationLat"
+       res = requests.get(url=URL)
+       data = res.json()
+       data = data['colleges']
+       return render(request, 'custom.html', {'items': data})
 
-    res = requests.get(url=URL)
-    data = res.json()
-    data = data['colleges']
-    return render(request, 'custom.html', {'items': data})
-
+    def post(self,request):
+        dat=request.POST["query"]
+        url="https://api.collegeai.com/v1/api/college/info?api_key=zPrUOEVtV86G&college_names={}%2Charvard%2CYale%2Cwashington%2Cduke%2Cnorthwesternuniversity&info_ids=city%2Cin_state_tuition%2Cwebsite%2Cshort%20description%2Ccampus%20image"
+        url=url.format(dat)
+        re=requests.get(url=url)
+        dat=re.json()
+        dat=dat['colleges']
+        return render(request, 'custom.html', {'items': dat})
 # Recommendations Section
 
 
@@ -279,6 +287,6 @@ class addToList(APIView):
             colleges = College(user=request.user, name=request.POST['college-name'],
                                 status=request.POST['status'], date=datetime.today().strftime('%Y-%m-%d'))
             colleges.save()
-            return redirect('studentHome')
+            return redirect('search')
         except :
             return render(request, 'addColleges.html', {'collegeName': name,'error':"No Status Selected Please Select a Status"})
