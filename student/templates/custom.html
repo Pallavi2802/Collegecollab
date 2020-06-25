@@ -15,6 +15,13 @@
     <script src="https://use.fontawesome.com/977b0e453b.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Add Colleges</title>
+
+    <style>
+        .btn,
+        .btn-primary {
+            background-color: #866ec7;
+        }
+    </style>
 </head>
 
 <body>
@@ -29,9 +36,11 @@
                 <p class="card-text">{{item.shortDescription}}</p>
             </div>
             <div class="card-footer">
-                <a href="{{item.website}}" class="btn btn-primary">{{item.website}}</a>
-                <a href="{% url 'search' item.collegeUnitId %}" class="btn btn-primary">More Info</a>
-                <a href="#" class="btn btn-primary" style="float: right;">Add College to List</a>
+                <a href="https://{{item.website}}" class="btn btn-primary">{{item.website}}</a>
+                <a href="{% url 'search' item.collegeUnitId %}" class="btn btn-primary">More
+                    Info</a>
+                <a href="{% url 'addtolist' item.name%}" class="btn btn-primary" style="float: right;">Add College to
+                    List</a>
             </div>
 
         </div>

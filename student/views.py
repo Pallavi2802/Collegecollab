@@ -228,29 +228,29 @@ def myList(request):
 # Add College Functionality
 
 
-class AddCollege(APIView):
-    clg = []
+# class AddCollege(APIView):
+#     clg = []
 
-    def get(self, request):
-        # URL To get College Names
-        URL = "https://api.collegeai.com/v1/api/college-list?api_key=zPrUOEVtV86G"
-        res = requests.get(url=URL)
-        clg = []
-        data = res.json()
-        data_list = data['colleges']
-        for i in data_list:
-            clg.append(i['name'])
+#     def get(self, request):
+#         # URL To get College Names
+#         URL = "https://api.collegeai.com/v1/api/college-list?api_key=zPrUOEVtV86G"
+#         res = requests.get(url=URL)
+#         clg = []
+#         data = res.json()
+#         data_list = data['colleges']
+#         for i in data_list:
+#             clg.append(i['name'])
 
-        return render(request, 'addcolleges.html', {'options': clg})
+#         return render(request, 'addcolleges.html', {'options': clg})
 
-    def post(self, request):
-        if request.POST['collegename'] and request.POST['preference']:
-            colleges = College(user=request.user, name=request.POST['collegename'],
-                               order=request.POST['preference'], date=datetime.today().strftime('%Y-%m-%d'))
-            colleges.save()
-            return redirect('studentHome')
-        else:
-            return render(request, 'addcolleges.html', {'options': clg})
+#     def post(self, request):
+#         if request.POST['collegename'] and request.POST['preference']:
+#             colleges = College(user=request.user, name=request.POST['collegename'],
+#                                order=request.POST['preference'], date=datetime.today().strftime('%Y-%m-%d'))
+#             colleges.save()
+#             return redirect('studentHome')
+#         else:
+#             return render(request, 'addcolleges.html', {'options': clg})
 
 
 class viewColleges(APIView):
@@ -268,3 +268,17 @@ class viewColleges(APIView):
 
 def details(request, unit_id):
     return render(request, 'details.html', {'unitid': unit_id})
+
+
+class addToList(APIView):
+    def get(self, request, name):
+        return render(request, 'addColleges.html', {'collegeName': name})
+
+    def post(self, request, name):
+        try:
+            colleges = College(user=request.user, name=request.POST['college-name'],
+                                status=request.POST['status'], date=datetime.today().strftime('%Y-%m-%d'))
+            colleges.save()
+            return redirect('studentHome')
+        except :
+            return render(request, 'addColleges.html', {'collegeName': name,'error':"No Status Selected Please Select a Status"})

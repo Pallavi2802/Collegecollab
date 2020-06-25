@@ -79,6 +79,6 @@ class Deadline(models.Model):
 
 class College(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="college")
-    name = models.CharField(max_length=500)
-    order = models.CharField(max_length=3)
+    name = models.CharField(max_length=256)
+    status = models.CharField(max_length=12, null=False, default="None")
     date = models.DateField()

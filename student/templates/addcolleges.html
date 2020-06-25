@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{% static 'footer.css' %}">
     <script src="https://use.fontawesome.com/977b0e453b.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>College Information</title>
+    <title>Add College</title>
 </head>
 <style media="screen">
     html,
@@ -31,14 +31,7 @@
         color: gray;
     }
 
-    input {
-        width: 30%;
-        height: 50px;
-        padding: 10px;
-        margin-top: 20px;
-    }
-
-    select {
+    input,select {
         width: 30%;
         height: 50px;
         padding: 10px;
@@ -72,9 +65,8 @@
 
     @media only screen and (max-width: 600px) {
 
-        input,
-        button,
-        select {
+        input,select,
+        button {
             width: 90%;
             margin-left: auto;
             margin-right: auto;
@@ -88,13 +80,28 @@
 </style>
 
 <body>
+    {% if error %}
+        <h3>{{error}}</h3>
+    {%endif%}
     <div class="main-content">
-        <div class="collegeai-acceptance-curves" data-college-unit-id="{{unitid}}"></div>
-        <div class="collegeai-acceptance-scatter-plot" data-college-unit-id="{{unitid}}"></div>
+        <a href="{% url 'studentHome' %}"><i style="margin-bottom: 20px;float: right;" class="fa fa-home fa-2x"></i></a>
+        <h3> Add College </h3>
+        <h6> Add college with appropriate status to your list.</h6>
+        <form class="" action="{% url 'addtolist' collegeName%}" method="post">
+            {% csrf_token %}
 
-        <div class="collegeai collegeai-college-info-table" data-info-ids="student-faculty-ratio,average-net-cost"
-            data-college-unit-id="{{unitid}}" data-show-header="true"></div>
-    </div>
+            <input type="text" name="college-name" value="{{collegeName}}">
+            <br>
+            <select type="text" name="status">
+                <option value="" selected>Choose a Status</option>
+                <option value="Applied">Applied</option>
+                <option value="Applying">Applying</option>
+                <option value="Accepted">Accepted</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+            <br>
+            <button type="submit" name="button">Submit</button>
+        </form>
     <footer class="site-footer">
         College Collab by Kepler Developers
     </footer>

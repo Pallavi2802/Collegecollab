@@ -29,7 +29,9 @@ urlpatterns = [
     path('search/', views.search, name="search"),
     path('recommendations/', views.recommend, name="recommendations"),
     path('myList/', views.myList, name="myList"),
-    path('addCollege/', views.AddCollege.as_view(), name='addCollege'),
-    path('viewCollege/',views.viewColleges.as_view(), name="viewCollege"),
-    path('student/search/(?P<unit_id>[0-9]+)/$',views.details, name='search')
+    #     path('addCollege/', views.AddCollege.as_view(), name='addCollege'),
+    path('viewCollege/', views.viewColleges.as_view(), name="viewCollege"),
+    path('student/search/(?P<unit_id>[0-9]+)/$', views.details, name='search'),
+    path('student/addtolist/(?P<name>[^/]+)$',
+         views.addToList.as_view(), name='addtolist'),
 ]
